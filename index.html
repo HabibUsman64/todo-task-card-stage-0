@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Task Card</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <article class="todo-card" data-testid="test-todo-card" role="region">
+
+    <h2 class="todo-title" data-testid="test-todo-title">
+      Finish My Frontend HNG Stage 0 Assignment By Due Date
+    </h2>
+
+    <p class="todo-description" data-testid="test-todo-description">
+      To build a clean, testable, accessible and responsive todo item card with proper semantic HTML.
+    </p>
+
+    <!-- Priority -->
+    <span class="priority-badge high" 
+          data-testid="test-todo-priority" 
+          aria-label="Priority: High">
+      High
+    </span>
+
+    <!-- Status -->
+    <span class="status-badge pending" 
+          data-testid="test-todo-status" 
+          aria-label="Status: Pending">
+      Pending
+    </span>
+
+    <!-- Due Date -->
+    <time class="due-date" 
+          data-testid="test-todo-due-date" 
+          datetime="2026-03-01T18:00:00Z">
+      Due Mar 1, 2026
+    </time>
+
+    <!-- Time Remaining -->
+    <div class="time-remaining" 
+         data-testid="test-todo-time-remaining"
+         aria-live="polite">
+      Calculating...
+    </div>
+
+    <!-- Checkbox -->
+    <div class="checkbox-wrapper">
+      <input type="checkbox" 
+             id="complete-toggle" 
+             data-testid="test-todo-complete-toggle">
+      <label for="complete-toggle" class="checkbox-label">
+        Mark as completed
+      </label>
+    </div>
+
+    <!-- Tags -->
+    <ul class="tags" role="list" data-testid="test-todo-tags">
+      <li class="tag" data-testid="test-todo-tag-work">work</li>
+      <li class="tag" data-testid="test-todo-tag-urgent">urgent</li>
+      <li class="tag">design</li>
+    </ul>
+
+    <!-- Action Buttons -->
+    <div class="actions">
+      <button class="edit-btn" 
+              data-testid="test-todo-edit-button"
+              aria-label="Edit this task">
+        Edit
+      </button>
+      <button class="delete-btn" 
+              data-testid="test-todo-delete-button"
+              aria-label="Delete this task">
+        Delete
+      </button>
+    </div>
+
+  </article>
+
+  <script src="script.js"></script>
+</body>
+</html>

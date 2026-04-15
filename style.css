@@ -1,0 +1,153 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, sans-serif;
+  background-color: #f8fafc;
+  padding: 40px 20px;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.todo-card {
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+  width: 100%;
+  max-width: 480px;
+  padding: 28px;
+  border: 1px solid #e2e8f0;
+}
+
+.todo-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: #1e2937;
+  margin-bottom: 12px;
+  line-height: 1.4;
+}
+
+.todo-description {
+  color: #475569;
+  line-height: 1.55;
+  margin-bottom: 20px;
+}
+
+.priority-badge, .status-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  margin-right: 10px;
+}
+
+.priority-badge.high   { background: #fee2e2; color: #ef4444; }
+.priority-badge.medium { background: #fef3c7; color: #d97706; }
+.priority-badge.low    { background: #d1fae5; color: #10b981; }
+
+.status-badge.pending  { background: #dbeafe; color: #3b82f6; }
+.status-badge.done     { background: #d1fae5; color: #10b981; }
+
+.due-date {
+  display: block;
+  color: #64748b;
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.time-remaining {
+  font-weight: 600;
+  font-size: 1.05rem;
+  margin-bottom: 24px;
+  min-height: 1.4em;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.checkbox-wrapper input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: #3b82f6;
+  cursor: pointer;
+}
+
+.checkbox-label {
+  font-size: 1.02rem;
+  color: #374151;
+  cursor: pointer;
+  user-select: none;
+}
+
+.tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 28px;
+  padding: 0;
+  list-style: none;
+}
+
+.tag {
+  background: #f1f5f9;
+  color: #475569;
+  padding: 6px 14px;
+  border-radius: 9999px;
+  font-size: 0.9rem;
+}
+
+.actions {
+  display: flex;
+  gap: 13px;
+}
+
+.edit-btn, .delete-btn {
+  flex: 1;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-btn {
+  background: #2869d1;
+  color: white;
+}
+
+.delete-btn {
+  background: rgb(160, 13, 13);
+  color: white;
+}
+
+.edit-btn:hover, .delete-btn:hover {
+  opacity: 0.95;
+  transform: translateY(-1px);
+}
+
+/* Accessibility - Visible focus */
+button:focus, input[type="checkbox"]:focus {
+  outline: 3px solid #3b82f6;
+  outline-offset: 4px;
+}
+
+/* Responsiveness */
+@media (max-width: 480px) {
+  .todo-card {
+    padding: 22px;
+    border-radius: 14px;
+  }
+}
