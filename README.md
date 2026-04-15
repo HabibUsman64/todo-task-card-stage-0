@@ -16,8 +16,7 @@ Built as part of the **Frontend Wizards Stage 0** assignment.
 
 ## 🚀 Live Demo
 
-[View Live Demo]
-
+[ https://todo-task-card-stage-0.netlify.app/] 
 ## 🛠 Technologies Used
 
 - HTML5 (Semantic)
