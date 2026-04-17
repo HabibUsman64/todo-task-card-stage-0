@@ -34,3 +34,24 @@ Built as part of the **Frontend Wizards Stage 0** assignment.
 ## Run Locally
 
 https://github.com/HabibUsman64/todo-task-card-stage-0
+
+# Todo Task Card - Stage 1a Improvement
+
+This project is a continuation of the Stage 0 Task Card, now upgraded with interactive state management and dynamic UI updates.
+
+## 🚀 New Features in Stage 1a
+
+- **State-Driven UI:** The card is no longer static. It uses a JavaScript state object as the "Source of Truth."
+- **Interactive Edit Mode:** Users can now click "Edit" to modify the task details directly within the card.
+- **Advanced Synchronization:** - Toggling the checkbox automatically updates the status badge to "Done."
+    - Changing the status to "Done" in the edit form automatically checks the checkbox.
+- **Collapsible Description:** Long descriptions are truncated with a "Read More" toggle to maintain a clean UI.
+- **Granular Time Tracking:** The "Time Remaining" updates every 30 seconds and includes an "Overdue" state with a specific `data-testid`.
+- **Accessibility (A11y):** Added focus management when entering/exiting edit mode and expanded ARIA attributes.
+
+## 🛠 Tech Stack
+- Vanilla HTML5/CSS3
+- Pure JavaScript (No frameworks)
+
+## 📋 Testing
+All required `data-testid` attributes are implemented to ensure the card passes automated test suites for both display and edit states.

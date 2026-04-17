@@ -1,71 +1,122 @@
-const DUE_DATE = new Date("2026-03-01T18:00:00Z");
+// 1. STATE MANAGEMENT
+let state = {
+  title: "Finish My Frontend HNG Stage 1 Assignment",
+  description: "Implementing state management, edit modes, and advanced synchronization logic for the todo card component.",
+  priority: "High",
+  status: "Pending",
+  dueDate: "2026-04-20T18:00:00",
+  isEditing: false,
+  isExpanded: false
+};
 
-const checkbox = document.querySelector('[data-testid="test-todo-complete-toggle"]');
-const title = document.querySelector('[data-testid="test-todo-title"]');
+// 2. ELEMENT SELECTORS
+const displayContainer = document.getElementById('display-container');
+const editForm = document.getElementById('edit-form');
+const titleEl = document.querySelector('[data-testid="test-todo-title"]');
+const descEl = document.querySelector('[data-testid="test-todo-description"]');
+const priorityBadge = document.querySelector('[data-testid="test-todo-priority"]');
 const statusBadge = document.querySelector('[data-testid="test-todo-status"]');
+const dueDateEl = document.querySelector('[data-testid="test-todo-due-date"]');
 const timeRemainingEl = document.querySelector('[data-testid="test-todo-time-remaining"]');
-const editBtn = document.querySelector('[data-testid="test-todo-edit-button"]');
-const deleteBtn = document.querySelector('[data-testid="test-todo-delete-button"]');
+const checkbox = document.getElementById('complete-toggle');
 
+// 3. RENDER FUNCTION (Updates UI based on state)
+function render() {
+  // Update Text
+  titleEl.textContent = state.title;
+  
+  // Handle Expansion Logic
+  const limit = 60;
+  if (state.description.length > limit && !state.isExpanded) {
+    descEl.textContent = state.description.substring(0, limit) + "...";
+    document.getElementById('expand-btn').classList.remove('hidden');
+  } else {
+    descEl.textContent = state.description;
+    document.getElementById('expand-btn').classList.add('hidden');
+  }
+
+  // Badges
+  priorityBadge.textContent = state.priority;
+  priorityBadge.className = `priority-badge ${state.priority.toLowerCase()}`;
+  statusBadge.textContent = state.status;
+  statusBadge.className = `status-badge ${state.status.replace(" ", "-").toLowerCase()}`;
+
+  // Sync Checkbox
+  checkbox.checked = state.status === "Done";
+  document.querySelector('.todo-card').classList.toggle('done-state', state.status === "Done");
+
+  // Toggle Edit/Display View
+  if (state.isEditing) {
+    displayContainer.classList.add('hidden');
+    editForm.classList.remove('hidden');
+  } else {
+    displayContainer.classList.remove('hidden');
+    editForm.classList.add('hidden');
+  }
+
+  updateTimeRemaining();
+}
+
+// 4. TIME LOGIC
 function updateTimeRemaining() {
-  const now = new Date();
-  const diff = DUE_DATE - now;
-
-  if (diff <= 0) {
-    timeRemainingEl.textContent = "Due now!";
-    timeRemainingEl.style.color = "#ef4444";
+  if (state.status === "Done") {
+    timeRemainingEl.textContent = "Completed";
+    timeRemainingEl.style.color = "#10b981";
     return;
   }
 
-  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-  const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+  const now = new Date();
+  const diff = new Date(state.dueDate) - now;
 
-  let text = "";
-  if (days > 1) {
-    text = `Due in ${days} days`;
-  } else if (days === 1) {
-    text = "Due tomorrow";
-  } else if (hours > 0) {
-    text = `Due in ${hours} hours`;
+  if (diff <= 0) {
+    timeRemainingEl.textContent = "Overdue";
+    timeRemainingEl.style.color = "#ef4444";
+    timeRemainingEl.setAttribute('data-testid', 'test-todo-overdue-indicator');
   } else {
-    text = "Due very soon";
+    const hours = Math.floor(diff / (1000 * 60 * 60));
+    timeRemainingEl.textContent = `Due in ${hours} hours`;
+    timeRemainingEl.style.color = hours < 24 ? "#f59e0b" : "#64748b";
   }
-
-  timeRemainingEl.textContent = text;
-  timeRemainingEl.style.color = (days <= 2) ? "#ef4444" : "#10b981";
 }
 
-// Checkbox behavior - Strike through + Status change
+// 5. EVENT LISTENERS
+document.querySelector('.edit-btn').addEventListener('click', () => {
+  state.isEditing = true;
+  // Filling form inputs with current state
+  document.getElementById('edit-title').value = state.title;
+  document.getElementById('edit-desc').value = state.description;
+  document.getElementById('edit-priority').value = state.priority;
+  document.getElementById('edit-status').value = state.status;
+  document.getElementById('edit-date').value = state.dueDate;
+  render();
+});
+
+document.getElementById('cancel-btn').addEventListener('click', () => {
+  state.isEditing = false;
+  render();
+});
+
+editForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  state.title = document.getElementById('edit-title').value;
+  state.description = document.getElementById('edit-desc').value;
+  state.priority = document.getElementById('edit-priority').value;
+  state.status = document.getElementById('edit-status').value;
+  state.dueDate = document.getElementById('edit-date').value;
+  state.isEditing = false;
+  render();
+});
+
 checkbox.addEventListener('change', () => {
-  if (checkbox.checked) {
-    title.style.textDecoration = "line-through";
-    title.style.color = "#9ca3af";
-    statusBadge.textContent = "Done";
-    statusBadge.className = "status-badge done";
-  } else {
-    title.style.textDecoration = "none";
-    title.style.color = "#1e2937";
-    statusBadge.textContent = "Pending";
-    statusBadge.className = "status-badge pending";
-  }
+  state.status = checkbox.checked ? "Done" : "Pending";
+  render();
 });
 
-editBtn.addEventListener('click', () => {
-  console.log("edit clicked");
-  alert("Edit clicked - This would open edit form in a real app");
+document.getElementById('expand-btn').addEventListener('click', () => {
+  state.isExpanded = true;
+  render();
 });
 
-deleteBtn.addEventListener('click', () => {
-  if (confirm("Are you sure you want to delete this task?")) {
-    console.log("delete clicked");
-    alert("Task deleted (demo only)");
-  }
-});
-
-// Initialize
-function init() {
-  updateTimeRemaining();
-  setInterval(updateTimeRemaining, 60000); // Update every 60 seconds
-}
-
-window.onload = init;
+// INITIALIZE
+render();
+setInterval(updateTimeRemaining, 30000);
